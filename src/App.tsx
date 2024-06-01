@@ -6,6 +6,7 @@ import { BrowserRouter as Router , Routes , Route } from "react-router-dom";
 import useAuthStore from "./store/useAtuh";
 import { account } from "./service/appwrite";
 import { useEffect } from "react";
+import NewProject from "./pages/NewProject";
 function App() {
  const {setAuth} =useAuthStore()
 
@@ -35,6 +36,7 @@ function App() {
           <Routes>
             <Route path="/"  element={<Home />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/new-project" element={<NewProject/>} />
           </Routes>
         </Router>
     </ThemeProvider>

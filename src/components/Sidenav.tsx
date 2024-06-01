@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button } from './ui/button'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faPenToSquare ,faFolder , faGear} from "@fortawesome/free-solid-svg-icons"
@@ -18,7 +17,6 @@ export default function Sidenav() {
       <FontAwesomeIcon icon={faGear} className='text-xl' />
       Settings
       </Button>
-      
     </div>
   )
 }

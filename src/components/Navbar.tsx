@@ -26,7 +26,15 @@ export default function Navbar() {
         <div className="font-semibold">
             {
               isAuthenticated ? (
-               <Button onClick={Logout}>Logout</Button>
+                <div className="flex gap-2">
+                  <Link to="/">
+                  <Button variant={"ghost"} className="font-bold">Projects</Button>
+                  </Link>
+                  <Link to="/new-project">
+                  <Button className="font-bold" variant={"ghost"}>Create Project</Button>
+                  </Link>
+                  <Button onClick={Logout}>Logout</Button>
+                </div>
               ) : (
                 <Button>
                   <Link to={"/login"} className="w-full h-full block">
