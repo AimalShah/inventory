@@ -1,3 +1,4 @@
+import authService from "@/appwrite/auth"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useAuthStore from "@/store/useAtuh"
-import { account } from "@/service/appwrite"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -25,8 +25,7 @@ export default function LoginForm() {
         e.preventDefault();
         setLoading(true)
         try{
-            const res = await account.createEmailSession(email , password);
-
+            const res = await authService.login({email , password});
             if(res) {
                 setAuth(true);
                 navigate('/')

@@ -4,15 +4,15 @@ import LoginForm from "./pages/Login";
 import Home from "./pages/Home";
 import { BrowserRouter as Router , Routes , Route } from "react-router-dom";
 import useAuthStore from "./store/useAtuh";
-import { account } from "./service/appwrite";
 import { useEffect } from "react";
 import NewProject from "./pages/NewProject";
+import authService from "./appwrite/auth";
 function App() {
  const {setAuth} =useAuthStore()
 
  const init = async () => {
   try {
-    const res = await account.get();
+    const res = await authService.getCurrentUser();
 
     if(res) {
       setAuth(true)

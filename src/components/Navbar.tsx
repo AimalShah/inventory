@@ -1,4 +1,4 @@
-import { account } from "@/service/appwrite";
+import authService from "@/appwrite/auth";
 import { Button } from "./ui/button"
 import useAuthStore from "@/store/useAtuh"
 import { useNavigate  , Link } from "react-router-dom";
@@ -9,7 +9,7 @@ export default function Navbar() {
 
   const Logout = async () => {
     try{
-      const res = await account.deleteSession("current")
+     const res = await authService.logout();
       if(res) {
         setAuth(false)
         navigate("/")

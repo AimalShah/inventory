@@ -3,6 +3,8 @@ import ProjectCard from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+
+
 interface CardProps {
   title : string;
   description : String;
@@ -16,6 +18,7 @@ interface CardProps {
 export default function Home() {
     const {isAuthenticated} = useAuthStore();
     
+
     const projects = [
       {
         title : "Project A",
