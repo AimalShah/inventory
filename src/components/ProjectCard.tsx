@@ -1,40 +1,77 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import { TrashIcon} from "@radix-ui/react-icons";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { useNavigate } from "react-router-dom";
+
+
 
 
 interface CardProps {
-    title : string;
-    description : String;
-    status : string;
-    date : string;
+  $id : string;
+  title : string;
+  imageUrl : string;
+  index : number;
+  handleDelete : (e : string , fileId : string) => Promise<void>;
+  fileId : string;
 }
 
-export default function ProjectCard({title , description , status , date} : CardProps ) {
-    return (
-        <Card className="min-w-[290px]">
-            <CardHeader className="flex flex-row items-center gap-4">
-              <div className="grid gap-1">
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-              </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="ml-auto">
-                    <h1>...</h1>
-                    <span className="sr-only">Toggle menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View Project</DropdownMenuItem>
-                  <DropdownMenuItem>Delete Project</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardHeader>
-            <CardContent className="grid gap-2">
-              <div className="text-sm font-semibold">Status: {status}</div>
-              <div className="text-sm font-semibold">Due Date: {date}</div>
-            </CardContent>
-          </Card>
+export default function ProjectCard({$id , title , index , imageUrl , handleDelete , fileId}  : CardProps ) {
+  
+  const navigate = useNavigate();
+  
+  
+  return (
+      <div className="border gap-2 flex items-center rounded-md justify-between px-4">
+      <div className="flex gap-2 items-center">
+        <div className="p-2">{index + 1}</div>
+        <div className=" flex gap-4 items-center p-2">
+          <img src={imageUrl}
+            className="size-12"
+            alt="" />
+          <div>
+            {
+              title
+            }
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-2 items-center">
+        <Button onClick={() => navigate(`/${$id}`)}>
+          View
+        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <Button variant={"destructive"} size={"icon"}>
+              <TrashIcon/>
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete project
+                and remove your data from the server.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete($id , fileId)}>
+                Ok
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    </div>
     )
 }

@@ -4,8 +4,12 @@ type dataFields = {
     title : string;
     shortDescription : string;
     description : string;
-    members : string[];
+    members : string[] | never[] | undefined;
+    imageUrl : string;
+    ytLink : string; 
+    fileId : string;
 }
+
 
 
 export class Service{
@@ -21,7 +25,7 @@ export class Service{
         this.databases =  new Databases(this.client);
     }
 
-    async createProject({title  , shortDescription , description , members} :dataFields){
+    async createProject({title  , shortDescription , description , members , imageUrl , ytLink , fileId} : dataFields){
         try {
             return await this.databases.createDocument(
                 "tetrastudio2024",
@@ -31,7 +35,10 @@ export class Service{
                     title ,
                     shortDescription ,
                     description,
-                    members
+                    members,
+                    imageUrl,
+                    ytLink,
+                    fileId
                 }
             )
         } catch (error) {
@@ -39,53 +46,29 @@ export class Service{
         }
     }
 
-    async createLinkData({ title , ytLink , imageUrl} : {title :string; ytLink : string; imageUrl : string;}) {
-
-        try {
-             return await this.databases.createDocument(
-                "tetrastudio2024",
-                "link123",
-                ID.unique(),
-                {
-                    ytLink,
-                    imageUrl,
-                    title
-                }
-             )
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
     async getData() {
         try {
             const projectData = await this.databases.listDocuments("tetrastudio2024" , "projects123");
-            const links = await this.databases.listDocuments("tetrastudio2024" , "link123" );
-
-            const res = {
-                projectData : projectData , 
-                links : links
-            };
-
+            return projectData;
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    async getSingleProject (id : string) {
+        try {
+            const res = await this.databases.getDocument("tetrastudio2024" , "projects123" , id)
             return res;
         } catch (err) {
             console.log(err)
         }
     }
 
-    async deleteProject(id1 : string , id2 :string){
+    async deleteProject(id : string){
         try{
             await this.databases.deleteDocument(
                 "tetrastudio2024" , 
                 "projects123",
-                id1
-            )
-
-            await this.databases.deleteDocument(
-                "tetrastudio2024" , 
-                "link123",
-                id2
+                id
             )
         } catch (err) {
             console.log(err)

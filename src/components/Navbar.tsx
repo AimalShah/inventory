@@ -1,6 +1,6 @@
 import authService from "@/appwrite/auth";
 import { Button } from "./ui/button"
-import useAuthStore from "@/store/useAtuh"
+import useAuthStore from "@/store/useAuth"
 import { useNavigate  , Link } from "react-router-dom";
 
 export default function Navbar() {
@@ -22,7 +22,11 @@ export default function Navbar() {
   return (
     <div className="border-b border-border">
       <nav className="container mx-auto flex justify-between p-4">
-        <div className="text-xl font-semibold">Dashboard</div>
+        <div className="text-xl font-semibold">
+        <Link to={"/"}>
+          Dashboard
+        </Link>
+        </div>
         <div className="font-semibold">
             {
               isAuthenticated ? (
@@ -36,11 +40,11 @@ export default function Navbar() {
                   <Button onClick={Logout}>Logout</Button>
                 </div>
               ) : (
-                <Button>
                   <Link to={"/login"} className="w-full h-full block">
+                <Button>
                   Login
-                  </Link>
                   </Button>
+                </Link>
               )
 
             }

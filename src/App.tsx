@@ -1,13 +1,16 @@
 import { ThemeProvider } from "./components/theme-provider";
 import Navbar from "./components/Navbar";
-import LoginForm from "./pages/Login";
 import Home from "./pages/Home";
 import { BrowserRouter as Router , Routes , Route } from "react-router-dom";
-import useAuthStore from "./store/useAtuh";
+import useAuthStore from "./store/useAuth";
 import { useEffect } from "react";
 import NewProject from "./pages/NewProject";
 import authService from "./appwrite/auth";
+import SingleProject from "./pages/SingleProject";
+import LoginPage from "./pages/Login";
+
 function App() {
+
  const {setAuth} =useAuthStore()
 
  const init = async () => {
@@ -18,13 +21,12 @@ function App() {
       setAuth(true)
     }
 
-    if(!res) {
-      alert(res)
-    }
+   
   } catch (err) {
     console.log(err)
   }
  }
+ 
  useEffect(() => {
   init()
  }, [])
@@ -35,8 +37,9 @@ function App() {
       <Navbar/>
           <Routes>
             <Route path="/"  element={<Home />} />
-            <Route path="/login" element={<LoginForm />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/new-project" element={<NewProject/>} />
+            <Route path="/:id" element={<SingleProject/>} />
           </Routes>
         </Router>
     </ThemeProvider>
